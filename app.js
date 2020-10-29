@@ -62,12 +62,6 @@ app.get("/all", (req, res) => {
     }})
 })
 
-const arr = [1, 2, 3, 4];
-
-console.log(mean(arr));
-console.log(median(arr));
-console.log(mode(arr));
-
 app.use(function (req, res, next) {
     const err = new ExpressError("Not Found", 404);
     return next(err);
@@ -82,6 +76,5 @@ app.use(function(err, req, res, next) {
     });
   });
 
-app.listen(3000, function() {
-    console.log("SERVER RUNNING");
-})
+
+module.exports = app;

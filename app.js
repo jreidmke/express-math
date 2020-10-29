@@ -10,13 +10,19 @@ function mean(arr) {
     }))/arr.length);
 }
 
-app.get('/', (req, res) => {
-    return res.send("THIS IS PIZZA");
+app.get('/mean', (req, res) => {
+    const avg = mean(((req.query.nums.split('').filter(x => x !== ","))).map(x => parseInt(x))).toString();
+    return res.send(avg);
 })
 
 function median(arr) {
     return (arr.sort(function(a, b){return a - b})[Math.floor(arr.length/2)]);
 }
+
+app.get('/median', (req, res) => {
+    const med = median(((req.query.nums.split('').filter(x => x !== ","))).map(x => parseInt(x))).toString();
+    return res.send(med);
+})
 
 function mode(array)
 {
@@ -40,7 +46,23 @@ function mode(array)
     return maxEl;
 }
 
-const arr = [1, 2, 2, 3];
+app.get("/mode", (req, res) => {
+    const mod = mode(((req.query.nums.split('').filter(x => x !== ","))).map(x => parseInt(x))).toString();
+    return res.send(mod);
+})
+
+app.get("/all", (req, res) => {
+    const avg = mean(((req.query.nums.split('').filter(x => x !== ","))).map(x => parseInt(x))).toString();
+    const med = median(((req.query.nums.split('').filter(x => x !== ","))).map(x => parseInt(x))).toString();
+    const mod = mode(((req.query.nums.split('').filter(x => x !== ","))).map(x => parseInt(x))).toString();
+    return res.json({response: {
+        mean: avg,
+        median: med,
+        mode: mod
+    }})
+})
+
+const arr = [1, 2, 3, 4];
 
 console.log(mean(arr));
 console.log(median(arr));
